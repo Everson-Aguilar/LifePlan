@@ -150,6 +150,25 @@ export const getProducts = async (): Promise<Product[]> => {
 }
 
 
+/////////////////////////////////////////////////////////// calculator ////////////////////////////////////////////////////
+
+
+// Guarda el balance total actual
+export const saveTotalBalance = async (amount: number) => {
+  const db = await getDB()
+  const key = 'balance-total'
+  await db.put(STORE_NAME, { amount, date: new Date().toISOString() }, key)
+  console.log(`Balance guardado: ${amount}`)
+}
+
+// Obtener el balance total guardado
+export const getSavedBalance = async (): Promise<{ amount: number; date: string } | null> => {
+  const db = await getDB()
+  const key = 'balance-total'
+  const result = await db.get(STORE_NAME, key)
+  return result || null
+}
+
 
 
 

@@ -14,7 +14,7 @@ export default function Registers() {
 
     <section>
 
-        <section className="flex justify-center items-center  gap-5">
+        <section className="flex justify-center items-center mt-12 gap-5">
 
 
             <section className="w-96 border h-72 rounded-2xl "><IncomeForm/></section>

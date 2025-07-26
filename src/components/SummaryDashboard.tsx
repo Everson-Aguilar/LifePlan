@@ -20,7 +20,7 @@ type Product = { name: string; action: string; value: number }
 const TextModal: React.FC<{ text: string; onClose: () => void }> = ({ text, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center ">
-      <div className="p-6 rounded bg-amber-500 shadow-md max-w-md w-full relative">
+      <div className="p-6 rounded bg-amber-500 border-2  border-neutral-900 shadow-md max-w-md w-full relative">
         <span className="text-3xl font-bold text-white">!</span>
         <button
           onClick={onClose}
@@ -77,15 +77,15 @@ const SummaryDashboard: React.FC = () => {
     fetchData()
   }, [])
 
-  const cardStyle = 'bg-amber-500 rounded p-1 shadow-sm overflow-x-auto '
+  const cardStyle = 'bg-amber-500 h-4/5  scroll-invisible rounded p-1 shadow-sm overflow-auto '
   const titleStyle = 'text-lg text-neutral-700 font-semibold mb-2'
   const tableStyle = 'min-w-full text-sm text-left'
-  const thStyle = 'font-semibold text-gray-600 border-b pb-1 pr-2'
+  const thStyle = 'font-semibold text-neutral-700 border-b pb-1 pr-2'
   const tdStyle = 'py-1 pr-2 text-gray-700'
 
   return (
     <div className="p-3 space-y-6 overflow-y-auto">
-      <h2 className="text-3xl font-bold mb-4 text-neutral-700 ">Resumen general</h2>
+      <h2 className="text-3xl font-bold mb-4 text-neutral-700  ">Resumen general</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-1">
         {/* Ingresos */}
