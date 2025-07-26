@@ -68,7 +68,7 @@ const InventorySection: React.FC = () => {
     <div className="gap-6 flex w-full">
       {/* Herramientas */}
       <form onSubmit={handleToolSubmit} className={sectionClass}>
-        <h3 className="font-semibold text-base">Herramienta</h3>
+        <h3 className="font-semibold text-base">Herramientas</h3>
 
         <input
           type="text"
@@ -144,7 +144,7 @@ const InventorySection: React.FC = () => {
 
       {/* Productos */}
       <form onSubmit={handleProductSubmit} className={sectionClass}>
-        <h3 className="font-semibold text-base">Producto</h3>
+        <h3 className="font-semibold text-base">Productos</h3>
 
         <input
           type="text"

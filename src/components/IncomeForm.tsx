@@ -33,7 +33,7 @@ const IncomeForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="w-full p-4 rounded space-y-4">
       <h2 className="text-base font-medium">
-        <span className='text-pink-400 pr-5'>+</span>Registrar ingreso
+        <span className='text-pink-400 pr-5'>+</span>Registrar ingresos
       </h2>
 
       <input

@@ -33,7 +33,7 @@ const ExpenseForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="w-full p-4 space-y-4">
       <h2 className="text-base font-medium">
-        <span className='text-pink-400 pr-5'>-</span>Registrar gasto
+        <span className='text-pink-400 pr-5'>-</span>Registrar gastos
       </h2>
 
       <input

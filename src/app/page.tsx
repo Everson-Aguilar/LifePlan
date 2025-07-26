@@ -37,6 +37,4 @@ git add .
 git commit -m "25/07/2025"
 git push
 
-
-
 */
