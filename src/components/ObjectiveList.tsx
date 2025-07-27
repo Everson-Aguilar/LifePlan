@@ -81,7 +81,7 @@ const ObjectiveList: React.FC = () => {
                 </h3>
 
                 {obj.description && (
-                  <p className="text-sm border-b h-40 text-gray-500 mt-1 px-2">
+                  <p className="text-sm border-b h-40 text-gray-500 mb-20 mt-1 px-2">
                     {obj.description}
                   </p>
                 )}
