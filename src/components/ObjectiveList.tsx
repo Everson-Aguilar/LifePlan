@@ -92,9 +92,9 @@ const ObjectiveList: React.FC = () => {
 
                 <button
                   onClick={() => handleMarkAsDone(obj.key)}
-                  className="text-xs border rounded-full h-60 p-1 hover:bg-red-800 text-red-600 hover:underline ml-4"
+                  className="text-xs border rounded-full h-16 relative top-20 scale-90 p-1 hover:bg-red-800 text-red-600 hover:underline ml-4"
                 >
-                  Marcar como hecho
+                  completado
                 </button>
               )}
             </div>
