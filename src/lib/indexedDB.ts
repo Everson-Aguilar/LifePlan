@@ -83,7 +83,7 @@ export const saveProduct = async (name: string, action: string, value: number) =
 
 
 
-//--------------------------------------------------------------------Get-------------------------------------------------------------------------///
+//--------------------------------------------------------------------GetGroupForm-------------------------------------------------------------------------///
 
 
 
@@ -157,6 +157,54 @@ export const getSavedBalance = async (): Promise<{ amount: number; date: string 
   const result = await db.get(STORE_NAME, key)
   return result || null
 }
+
+
+
+////////////////////////////////////////////////////////// ObjetiveCreator///////////////////////////////////////////////////
+
+
+// Tipado del objetivo
+export type Objective = {
+  title: string
+  description?: string
+  active: boolean
+  key?: string // ← necesario para editarlo luego
+}
+
+
+// Guardar un nuevo objetivo
+export const saveObjective = async (data: Objective) => {
+  const db = await getDB()
+  const key = `objective-${Date.now()}`
+  await db.put(STORE_NAME, data, key)
+}
+
+// Obtener todos los objetivos
+export const getAllObjectives = async (): Promise<Objective[]> => {
+  const db = await getDB()
+  const allKeys = await db.getAllKeys(STORE_NAME)
+  const keys = allKeys.filter((key): key is string => typeof key === 'string' && key.startsWith('objective-'))
+
+  const results = await Promise.all(
+    keys.map(async (key) => {
+      const obj = (await db.get(STORE_NAME, key)) as Objective
+      return { ...obj, key } // ← devuelve el key junto
+    })
+  )
+
+  return results
+}
+
+// update states
+export const updateObjectiveActive = async (key: string, newState: boolean) => {
+  const db = await getDB()
+  const existing = await db.get(STORE_NAME, key)
+
+  if (existing) {
+    await db.put(STORE_NAME, { ...existing, active: newState }, key)
+  }
+}
+
 
 
 
