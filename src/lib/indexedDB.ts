@@ -19,30 +19,19 @@ const getDB = async () => {
 ///////////////////////////////////////////////////////////////////////////////////// api local ////////////////////////////////////////////////////
 
 
-// Guarda una fecha de inicio para un mes dado
+// Guarda la fecha de inicio para un mes
 export const saveMonthStartDate = async (monthId: number, date: Date) => {
   const db = await getDB()
-  const key = `month-${monthId}`
-  await db.put(STORE_NAME, date.toISOString(), key)
-  console.log(`Mes ${monthId}: Se guardó manualmente la fecha ${date.toISOString()}`)
+  await db.put(STORE_NAME, date.toISOString(), monthId.toString())
 }
 
-// Obtiene la fecha de inicio de un mes, o asigna una por defecto si no existe
-export const getMonthStartDate = async (monthId: number): Promise<Date> => {
+// Recupera la fecha de inicio para un mes
+export const getMonthStartDate = async (monthId: number): Promise<Date | null> => {
   const db = await getDB()
-  const key = `month-${monthId}`
-  const isoString = await db.get(STORE_NAME, key)
+  const dateString = await db.get(STORE_NAME, monthId.toString())
 
-  if (isoString) {
-    return new Date(isoString)
-  } else {
-    const defaultDate = new Date('2024-07-01')
-    await db.put(STORE_NAME, defaultDate.toISOString(), key)
-    console.log(`Mes ${monthId}: Se asignó fecha por defecto = ${defaultDate.toISOString()}`)
-    return defaultDate
-  }
+  return dateString ? new Date(dateString) : null
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
