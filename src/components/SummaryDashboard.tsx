@@ -77,14 +77,14 @@ const SummaryDashboard: React.FC = () => {
     fetchData()
   }, [])
 
-  const cardStyle = 'bg-amber-500 h-4/5  scroll-invisible rounded p-1 shadow-sm overflow-auto '
-  const titleStyle = 'text-lg text-neutral-700 font-semibold mb-2'
+  const cardStyle = '  h-[300px]  scroll-invisible p-1 shadow-sm overflow-auto '
+  const titleStyle = 'text-lg text-neutral-500 font-semibold mb-2'
   const tableStyle = 'min-w-full text-sm text-left'
-  const thStyle = 'font-semibold text-neutral-700 border-b pb-1 pr-2'
-  const tdStyle = 'py-1 pr-2 text-gray-700'
+  const thStyle = 'font-semibold text-neutral-600 border-b pb-1 pr-2'
+  const tdStyle = 'py-1 pr-2 text-gray-500'
 
   return (
-    <div className="p-3 space-y-6 overflow-y-auto">
+    <div className="p-3  space-y-6 overflow-y-auto">
       <h2 className="text-3xl font-bold mb-4 text-neutral-700  ">Resumen general</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-1">
@@ -119,7 +119,7 @@ const SummaryDashboard: React.FC = () => {
         <div className={cardStyle}>
           <h3 className={titleStyle}>Gastos</h3>
           {expenses.length === 0 ? (
-            <p className="text-sm text-gray-400">Sin gastos</p>
+            <p className="text-sm  text-neutral-600">Sin gastos</p>
           ) : (
             <table className={tableStyle}>
               <thead>
