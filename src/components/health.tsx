@@ -15,11 +15,10 @@ const months: Month[] = [
   { id: 3, days: 30 },
 ]
 
-// ✅ Normalizar fechas (sin horas)
+// ✅ Normalizar fechas
 const normalize = (date: Date) =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
-// ✅ Mover fuera para evitar advertencias
 const fetchDates = async () => {
   const todayDate = normalize(new Date())
   const startData: Record<number, Date | null> = {}
@@ -34,14 +33,8 @@ const fetchDates = async () => {
       const diff = Math.floor(
         (todayDate.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
       )
-
-      console.log(
-        `Mes ${id}: Hoy = ${todayDate.toDateString()} | Guardado = ${start.toDateString()} | Días pasados = ${diff}`
-      )
-
       daysData[id] = diff
     } else {
-      console.log(`Mes ${id}: No hay fecha guardada. Se asigna 0 días.`)
       daysData[id] = 0
     }
   }
@@ -64,23 +57,15 @@ const MonthlyTracker: React.FC = () => {
     load()
   }, [])
 
-  // Intervalo para detectar cambio de día
   useEffect(() => {
     const interval = setInterval(() => {
       const current = new Date().toDateString()
-      setToday(prev => {
-        if (current !== prev) {
-          console.log(`Cambio detectado: ayer era ${prev}, ahora es ${current}`)
-          return current
-        }
-        return prev
-      })
+      setToday(prev => (current !== prev ? current : prev))
     }, 60 * 1000)
 
     return () => clearInterval(interval)
   }, [])
 
-  // Cuando cambia el día, vuelve a calcular días pasados
   useEffect(() => {
     const update = async () => {
       const { startData, daysData } = await fetchDates()
@@ -97,41 +82,55 @@ const MonthlyTracker: React.FC = () => {
 
     setStartDates(prev => ({ ...prev, [id]: now }))
     setDaysPassed(prev => ({ ...prev, [id]: 0 }))
-
-    console.log(`Mes ${id} reiniciado con fecha: ${now.toDateString()}`)
   }
 
   return (
     <div className="p-3 space-y-6">
-      {months.map(({ id, days }) => (
-        <div key={id} className="flex items-center gap-4">
-          <Image src="/life.ico" alt={`Mes ${id}`} width={40} height={40} />
+      {months.map(({ id, days }) => {
+        const isStarted = startDates[id] !== null
 
-          <div className="grid grid-cols-6 gap-1 p-2">
-            {Array.from({ length: days }, (_, i) => (
-              <div
-                key={i}
-                className={`w-3 h-3 rounded-full ${
-                  i < (daysPassed[id] ?? 0) ? 'bg-gray-400' : 'bg-pink-300'
+        return (
+          <div key={id} className="flex items-center gap-4">
+            <Image src="/life.ico" alt={`Mes ${id}`} width={40} height={40} />
+
+            <div className="grid grid-cols-6 gap-1 p-2">
+              {Array.from({ length: days }, (_, i) => {
+                let color = 'bg-gray-300'
+                if (isStarted) {
+                  color = i < (daysPassed[id] ?? 0) ? 'bg-gray-400' : 'bg-pink-300'
+                }
+                return (
+                  <div
+                    key={i}
+                    className={`w-3 h-3 rounded-full ${color}`}
+                    title={`Día ${i + 1}`}
+                  />
+                )
+              })}
+            </div>
+
+            <div className="-translate-y-6 text-center">
+              <button
+                onClick={() => activateMonth(id)}
+                className={`text-xs px-2 py-1 rounded hover:scale-110 transition ${
+                  isStarted
+                    ? 'bg-pink-400 text-white'
+                    : 'bg-gray-400 text-gray-800'
                 }`}
-                title={`Día ${i + 1}`}
-              />
-            ))}
+              >
+                Recargar
+              </button>
+              <p
+                className={`text-xs mt-1 ${
+                  isStarted ? 'text-gray-600' : 'text-gray-400 italic'
+                }`}
+              >
+                Inicio: {startDates[id]?.toISOString().split('T')[0] || 'N/A'}
+              </p>
+            </div>
           </div>
-
-          <div className="-translate-y-6 text-center">
-            <button
-              onClick={() => activateMonth(id)}
-              className="text-xs bg-pink-400 text-white px-2 py-1 rounded hover:scale-110"
-            >
-              Recargar
-            </button>
-            <p className="text-xs text-gray-600 mt-1">
-              Inicio: {startDates[id]?.toISOString().split('T')[0] || 'N/A'}
-            </p>
-          </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
