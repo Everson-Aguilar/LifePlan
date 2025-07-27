@@ -54,7 +54,7 @@ const ObjectiveList: React.FC = () => {
       </button>
 
       {visible && (
-        <div className="w-[380px] scroll-invisible text-center flex flex-col items-center h-screen bg-neutral-800 overflow-y-scroll space-y-4 transition-all duration-500 p-4 shadow-2xs">
+        <div className="w-[390px] scroll-invisible text-center flex flex-col items-center h-screen bg-neutral-800 overflow-y-scroll space-y-4 transition-all duration-500 p-4 shadow-2xs">
           <h2 className="text-lg font-semibold text-red-600">
             Objetivos registrados
           </h2>
